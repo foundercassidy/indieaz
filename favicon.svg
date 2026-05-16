@@ -1,0 +1,6 @@
+<svg width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+  <rect width="56" height="56" fill="#C4541A"/>
+  <text x="28" y="24" text-anchor="middle" font-family="monospace" font-size="11" font-weight="400" fill="#F5EDD9" letter-spacing="3">indie</text>
+  <line x1="10" y1="30" x2="46" y2="30" stroke="#F5EDD9" stroke-width="0.8"/>
+  <text x="28" y="43" text-anchor="middle" font-family="monospace" font-size="11" font-weight="400" fill="#F5EDD9" letter-spacing="3">AZ</text>
+</svg>

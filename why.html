@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why indie AZ exists</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Arvo:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5EDD9;
+    --sand: #EDD9B0;
+    --rust: #8B3A1A;
+    --burnt: #C4541A;
+    --amber: #E8842A;
+    --ink: #2A1A0E;
+    --mid: #7A4A2A;
+    --muted: #B08060;
+    --pale: #FAF3E8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Courier Prime', monospace;
+    font-size: 17px;
+    line-height: 1.85;
+    overflow-x: hidden;
+  }
+  .paper {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 34px,
+      rgba(139,58,26,0.03) 34px, rgba(139,58,26,0.03) 35px
+    );
+  }
+
+  /* Arizona western border SVG -- Colorado River path */
+
+  .scale-strip {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; height: 5px; z-index: 100;
+  }
+  .scale-strip span { flex: 1; }
+  .sc1 { background: #2A1A0E; }
+  .sc2 { background: #8B3A1A; }
+  .sc3 { background: #C4541A; }
+  .sc4 { background: #E8842A; }
+  .sc5 { background: #F2C07E; }
+  .sc6 { background: #F5EDD9; }
+
+  nav {
+    position: sticky; top: 5px; z-index: 90;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 3rem;
+    background: var(--cream);
+    border-bottom: 2px solid var(--burnt);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: 0.08em;
+    color: var(--rust); text-decoration: none;
+  }
+  .nav-logo span { color: var(--burnt); }
+  .nav-right { display: flex; gap: 0.75rem; align-items: center; }
+  .btn-nav {
+    background: var(--burnt); color: var(--cream);
+    border: none; padding: 0.45rem 1.1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem; letter-spacing: 0.12em;
+    cursor: pointer; text-decoration: none;
+    transition: background 0.15s;
+    display: inline-block;
+  }
+  .btn-nav:hover { background: var(--rust); }
+  .btn-nav-sand {
+    background: var(--sand); color: var(--rust);
+    border: 1.5px solid var(--burnt); padding: 0.45rem 1.1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem; letter-spacing: 0.12em;
+    cursor: pointer; text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+    display: inline-block;
+  }
+  .btn-nav-sand:hover { background: var(--amber); color: var(--cream); }
+
+  .hero {
+    padding: 6rem 3rem 4rem;
+    max-width: 860px;
+    position: relative; z-index: 1;
+  }
+  .hero-eyebrow {
+    font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--burnt); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 32px; height: 1px; background: var(--burnt);
+  }
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    line-height: 0.92; letter-spacing: 0.03em;
+    color: var(--rust); text-transform: uppercase;
+    margin-bottom: 3rem;
+  }
+  h1 .outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--rust);
+    display: block; opacity: 0.4;
+  }
+
+  .divider {
+    border: none; border-top: 1px solid var(--sand);
+    margin: 0 3rem;
+    position: relative; z-index: 1;
+  }
+
+  .body-wrap {
+    max-width: 680px;
+    padding: 4rem 3rem;
+    position: relative; z-index: 1;
+  }
+  p { margin-bottom: 1.75rem; color: var(--mid); }
+  p strong { color: var(--ink); font-weight: 700; }
+
+  .section-break {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem; letter-spacing: 0.1em;
+    color: var(--rust);
+    margin: 3rem 0 1.5rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--burnt);
+  }
+  .pull-quote {
+    font-family: 'Arvo', serif; font-style: italic;
+    font-size: 1.1rem; line-height: 1.7;
+    color: var(--burnt);
+    border-left: 3px solid var(--burnt);
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    margin: 2.5rem 0;
+  }
+  .pivot {
+    background: var(--sand);
+    border-top: 2px solid var(--burnt);
+    border-bottom: 2px solid var(--burnt);
+    padding: 3rem; margin: 3rem 0;
+  }
+  .pivot h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: 0.1em;
+    color: var(--rust); margin-bottom: 1.25rem;
+  }
+  .pivot p { color: var(--ink); }
+  .closing {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; letter-spacing: 0.12em;
+    color: var(--burnt); margin-top: 2rem;
+  }
+
+  .footer-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 3rem;
+    border-top: 1px solid var(--sand);
+    position: relative; z-index: 1;
+    margin-top: 2rem;
+  }
+  .footer-bar p {
+    font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted); margin: 0;
+  }
+  .scale-foot { display: flex; height: 3px; width: 60px; }
+  .scale-foot span { flex: 1; }
+
+  .fade-up { opacity: 0; transform: translateY(16px); animation: fadeUp 0.7s ease forwards; }
+  .d1 { animation-delay: 0.1s; }
+  .d2 { animation-delay: 0.25s; }
+  .d3 { animation-delay: 0.4s; }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  .az-border {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 60px;
+    height: 100vh;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .skip-link { position: absolute; top: -100px; left: 1rem; z-index: 999; background: var(--burnt); color: var(--cream); padding: 0.5rem 1rem; font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 0.12em; text-decoration: none; transition: top 0.15s; }
+  .skip-link:focus { top: 6px; }
+
+  .footer-full { position: relative; z-index: 1; border-top: 2px solid var(--burnt); background: var(--pale); }
+  .footer-top { padding: 2.5rem 3rem; display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap; border-bottom: 1px solid var(--sand); }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.08em; color: var(--rust); margin-bottom: 0.5rem; }
+  .footer-logo span { color: var(--burnt); }
+  .footer-tagline { font-size: 0.58rem; color: var(--muted); letter-spacing: 0.05em; margin-bottom: 0.2rem; }
+  .footer-nav { display: flex; gap: 3rem; }
+  .footer-col { display: flex; flex-direction: column; gap: 0.5rem; }
+  .footer-col-title { font-family: 'Bebas Neue', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; color: var(--rust); margin-bottom: 0.25rem; }
+  .footer-col a { font-size: 0.58rem; letter-spacing: 0.08em; color: var(--mid); text-decoration: none; transition: color 0.15s; }
+  .footer-col a:hover { color: var(--burnt); }
+  .footer-bottom { padding: 1rem 3rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .footer-copy { font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .wcag-badge { font-size: 0.45rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--muted); padding: 0.15rem 0.4rem; }
+  .scale-foot { display: flex; height: 3px; width: 60px; }
+  .scale-foot span { flex: 1; }
+</style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="alternate icon" href="favicon.svg">
+  <meta name="theme-color" content="#C4541A">
+  <meta property="og:title" content="You Are Standing On Very Old Ground -- indie AZ">
+  <meta property="og:description" content="The full story of Arizona. From the Diné and Ndee to the railroads, the mines, the internment camps, and 7.6 million people who ended up here.">
+  <meta property="og:image" content="https://indieaz.com/og-image.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://indieaz.com/why.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="indie AZ">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://indieaz.com/og-image.svg">
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<div class="paper"></div>
+<!-- Arizona western border: Colorado River hand-traced -->
+<svg class="az-border" viewBox="0 0 60 800" xmlns="http://www.w3.org/2000/svg">
+  <path d="M 45 0 C 43 12,47 22,44 32 C 41 42,46 52,43 62 C 40 72,45 82,42 92 C 39 102,44 112,41 122 C 38 132,43 140,40 150 C 37 160,42 168,40 178 C 38 188,42 196,40 206 C 38 216,42 224,40 234 C 38 244,42 252,40 262 C 38 272,41 280,39 290 C 37 300,40 308,38 318 C 36 328,39 336,37 346 C 35 356,38 364,36 374 C 34 384,37 390,35 400 C 33 410,36 418,34 428 C 32 438,35 446,33 456 C 31 466,34 474,32 484 C 30 494,33 502,31 512 C 30 522,32 530,30 540 C 29 550,31 558,30 568 C 29 578,30 586,29 596 C 28 606,29 614,28 624 C 27 634,28 642,27 652 C 26 662,27 670,26 680 C 25 690,26 698,24 708 C 22 718,23 728,21 738 C 19 748,20 758,18 768 L 15 800"
+  stroke="#C4541A" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+</svg>
+
+
+<!-- Arizona western border: Colorado River hand-traced path -->
+
+
+
+
+
+<div class="scale-strip">
+  <span class="sc1"></span><span class="sc2"></span><span class="sc3"></span>
+  <span class="sc4"></span><span class="sc5"></span><span class="sc6"></span>
+</div>
+
+<nav>
+  <a href="https://indieaz.com" class="nav-logo">indie<span>AZ</span></a>
+  <div class="nav-right">
+    <a href="https://indieaz.com" class="btn-nav-sand">Directory</a>
+    <a href="https://indieaz.com/#submit" class="btn-nav">Submit a Shop</a>
+  </div>
+</nav>
+
+<div class="hero fade-up d1">
+  <div class="hero-eyebrow">Our Why</div>
+  <h1>
+    You are standing<br>
+    on very<br>
+    <span class="outline">old ground.</span>
+  </h1>
+</div>
+
+<hr class="divider">
+
+<div class="body-wrap fade-up d2">
+
+  <p>Long before anyone drew a line in the sand and called it a border, this desert had names. The Onk Akimel O'odham and Tohono O'odham irrigated this valley with canal systems so sophisticated that arriving settlers in the 1800s simply dug them back out and called them their own. The Diné wove stories into blankets. The Ndee (Western Apache) knew every pass, every canyon, every water source in a landscape outsiders called hostile. The Hopi built Oraibi around 1150 AD, the oldest continuously inhabited settlement in what is now the United States. The Yavapai, the Southern Paiute, the Mohave, the Chemehuevi. They were not waiting to be discovered.</p>
+
+  <p>Then came the Spanish in 1539. Marcos de Niza first, then Coronado, then the Franciscan missionaries along the Santa Cruz Valley. They arrived looking for gold, found copper and community, and stayed anyway. The Hopi let them operate for about 140 years before the Pueblo Rebellion of 1680 clarified that the arrangement was not mutual. What the Spanish period left behind: the acequia water systems that still move water through this valley, the adobe building traditions, the feast days that tangled with Indigenous ceremony and became something entirely new. That is not erasure. That is culture doing what culture does. It mutates, survives, and becomes something no single hand can claim.</p>
+
+  <p>Mexico gained independence from Spain in 1821 and inherited the northern frontier. A short chapter but a real one. The mestizo communities of Tucson and Tubac were already living the complex, layered identity that Arizona still carries in its bones today.</p>
+
+  <p>Then the United States arrived with a treaty and a purchase. The Treaty of Guadalupe Hidalgo in 1848 handed the northern portion of this land to Washington. The Gadsden Purchase in 1853 bought the south for ten million dollars, a transaction the Onk Akimel O'odham, the Tohono O'odham, the Ndee, and the Diné were not party to, despite having lived there for centuries.</p>
+
+  <p>What followed was systematic. The Diné were force-marched nearly 400 miles to Bosque Redondo in 1864 in what they call Hwéeldi, the Long Walk. Thousands died on the way. At a cliff overlooking what is now Superior, Arizona, in the early 1870s, Ndee warriors chose to leap rather than surrender to U.S. Cavalry. Their tears pressed themselves into the black obsidian stones at the base of that mountain. You can still find them there. The land remembers what the history books summarize.</p>
+
+  <div class="section-break">Then they found copper.</div>
+
+  <p>Arizona produces roughly 65 percent of the country's copper. The mining industry built towns, railroads, and generational fortunes. It did so on land quietly withdrawn from tribal territories the moment ore was discovered beneath it. Towns like Superior were Ndee territory until silver showed up in 1875. The pattern repeated across the state for decades. Sacred sites are still being contested and threatened, right now, in 2025.</p>
+
+  <p>The railroads needed building too. Chinese laborers were brought in to lay track through brutal desert heat, paid 50 cents a day while Anglo workers earned a dollar, and were told the arrangement was a privilege. By 1883, 100 of every 400 miners in Clifton were Chinese. They built the infrastructure that opened this territory to everyone else and were repaid with the Chinese Exclusion Act of 1882, violence in the camps, and erasure from the official story. Some stayed anyway. They became merchants, farmers, and community builders in Tucson and Phoenix, growing vegetables on over 100 acres of leased land and feeding a city that barely acknowledged their names.</p>
+
+  <p>Then came World War II. Over 18,000 people of Japanese ancestry were sent to three internment camps at Poston, Arizona, built on the Colorado River Indian Reservation. The tribal council objected, not only because it was their land, but because they refused to take part in the unjust treatment of the Japanese Americans. Two displaced peoples, held on the same ground, by the same government, for different reasons. As one member of the Colorado River Indian Tribes put it, they lived "on a reservation within a reservation."</p>
+
+  <p>Then came statehood in 1912. Then the ranchers from Texas. Then air conditioning made the desert livable for people who had never learned to live in the desert. Then the retirees. Then the tech workers. Then the new arrivals chasing sunshine, affordable mortgages, and a fresh start, bringing their energy, their cultures, their $9 oat milk lattes, and a cost of living that has made it harder than ever for the people who were already here to stay.</p>
+
+  <p>Today Arizona has 7.6 million people. Nearly 97 percent of that growth has come from migration. One of the fastest growing states in the country, with no signs of slowing down.</p>
+
+  <p>A lot of people. A lot of history. A lot of ground covered.</p>
+
+  <div class="pivot">
+    <h2>So what does any of this have to do with retail?</h2>
+    <p>Honestly, everything.</p>
+    <p>Every dollar spent at a chain store leaves Arizona. Every dollar spent at an independently owned shop stays here, in the hands of someone who wakes up every morning in the same valley, under the same sun, on the same very old ground as you.</p>
+    <p>We are not Indigenous voices. We are not historians. We are Arizonans -- by birth, by choice, by accident, by ancestry, by last Tuesday's moving truck. We are everyone who ended up here, fell in love with the dry air, and decided to stay.</p>
+    <p>This desert has never been survived alone. Shopping local is just the modern version of the same truth. We take care of each other, or this place takes care of us.</p>
+    <p class="closing">That is indie AZ.</p>
+  </div>
+
+  <div class="pull-quote">Every shop in this directory is independently owned and operated by someone who lives here. That is the only rule.</div>
+
+  <p>Not what they sell. Not where their goods come from. The owner. Their story. Their stake in this ground.</p>
+
+  <p>We are not here to romanticize Arizona's past. It was complicated, frequently brutal, and not always something to be proud of. But we are deeply here for its present. The Diné jewelry maker in Flagstaff. The Pascua Yaqui herbalist in Tucson. The third-generation Mexican American bookshop owner in South Phoenix. The Japanese American ceramicist in Scottsdale whose grandparents built irrigation systems at Poston while imprisoned there. The Chinese American tea merchant whose great-grandfather laid rail through the Sonoran Desert for half a dollar a day. The person who arrived last year from somewhere else, chose this valley, and meant it.</p>
+
+  <p>All of it is Arizona. All of it counts.</p>
+
+  <p><strong>We are shaping the future by honoring the past.</strong></p>
+
+</div>
+
+<footer class="footer-full" role="contentinfo">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">indie<span>AZ</span></div>
+      <p class="footer-tagline">Arizona Independent Commerce</p>
+      <p class="footer-tagline">We are shaping the future by honoring the past.</p>
+    </div>
+    <div class="footer-nav">
+      <div class="footer-col">
+        <p class="footer-col-title">Directory</p>
+        <a href="https://indieaz.com">Home</a>
+        <a href="https://indieaz.com/why.html">Our Why</a>
+        <a href="https://indieaz.com/#zine">Join our Zine</a>
+        <a href="https://indieaz.com/#submit">Submit a Shop</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Legal</p>
+        <a href="https://indieaz.com/privacy.html">Privacy Policy</a>
+        <a href="https://indieaz.com/terms.html">Terms of Service</a>
+        <a href="https://indieaz.com/accessibility.html">Accessibility</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="scale-foot"><span class="sc1"></span><span class="sc2"></span><span class="sc3"></span><span class="sc4"></span><span class="sc5"></span><span class="sc6"></span></div>
+    <p class="footer-copy">&copy; 2025 indie AZ. An independent community project. Arizona, USA.</p>
+    <span class="wcag-badge" aria-label="WCAG 2.1 AA Compliant">WCAG 2.1 AA</span>
+  </div>
+</footer>
+
+</body>
+</html>

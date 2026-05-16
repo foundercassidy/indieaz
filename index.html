@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>indie AZ -- Arizona Independent Commerce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Arvo:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5EDD9;
+    --sand: #EDD9B0;
+    --rust: #8B3A1A;
+    --burnt: #C4541A;
+    --amber: #E8842A;
+    --ink: #2A1A0E;
+    --mid: #7A4A2A;
+    --muted: #B08060;
+    --pale: #FAF3E8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Courier Prime', monospace;
+    overflow-x: hidden;
+  }
+  .paper {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 34px,
+      rgba(139,58,26,0.03) 34px, rgba(139,58,26,0.03) 35px
+    );
+  }
+  .scale-strip {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; height: 5px; z-index: 100;
+  }
+  .scale-strip span { flex: 1; }
+  .sc1 { background: #2A1A0E; } .sc2 { background: #8B3A1A; }
+  .sc3 { background: #C4541A; } .sc4 { background: #E8842A; }
+  .sc5 { background: #F2C07E; } .sc6 { background: #F5EDD9; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 5px; z-index: 90;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 3rem;
+    background: var(--cream);
+    border-bottom: 2px solid var(--burnt);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 0.08em;
+    color: var(--rust); text-decoration: none;
+  }
+  .nav-logo span { color: var(--burnt); }
+  .nav-center {
+    font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .nav-right { display: flex; gap: 0.75rem; align-items: center; }
+  .btn-stamp {
+    background: var(--burnt); color: var(--cream);
+    border: none; padding: 0.45rem 1.1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem; letter-spacing: 0.12em;
+    cursor: pointer; text-decoration: none;
+    transition: background 0.15s; display: inline-block;
+  }
+  .btn-stamp:hover { background: var(--rust); }
+  .btn-sand {
+    background: var(--sand); color: var(--rust);
+    border: 1.5px solid var(--burnt); padding: 0.45rem 1.1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem; letter-spacing: 0.12em;
+    cursor: pointer; text-decoration: none;
+    transition: background 0.15s, color 0.15s; display: inline-block;
+  }
+  .btn-sand:hover { background: var(--amber); color: var(--cream); }
+
+  /* HERO */
+  .hero {
+    position: relative; z-index: 1;
+    padding: 5rem 3rem 3rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: end;
+    border-bottom: 1px solid var(--sand);
+    max-width: 1200px;
+  }
+  .hero-eyebrow {
+    font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--burnt); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 32px; height: 1px; background: var(--burnt);
+  }
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    line-height: 0.92; letter-spacing: 0.03em;
+    color: var(--rust); text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  h1 .accent { color: var(--burnt); display: block; }
+  h1 .outline {
+    color: transparent; -webkit-text-stroke: 1.5px var(--rust);
+    display: block; opacity: 0.45;
+  }
+  .hero-sub {
+    font-size: 0.75rem; line-height: 1.85; color: var(--mid);
+    max-width: 420px; margin-bottom: 2rem;
+  }
+  .hero-cta { display: flex; gap: 0.75rem; align-items: center; }
+  .hero-right {
+    display: flex; flex-direction: column;
+    align-items: flex-end; gap: 1.25rem;
+    padding-bottom: 0.5rem;
+  }
+  .stamp-badge {
+    border: 2.5px solid var(--burnt); border-radius: 50%;
+    width: 120px; height: 120px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; background: var(--pale);
+    transform: rotate(8deg); position: relative;
+  }
+  .stamp-badge::after {
+    content: ''; position: absolute; inset: 5px;
+    border: 1px solid var(--burnt); border-radius: 50%; opacity: 0.35;
+  }
+  .stamp-badge .num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem; color: var(--burnt); line-height: 1;
+  }
+  .stamp-badge .lbl {
+    font-size: 0.42rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--rust); line-height: 1.4; padding: 0 0.5rem; margin-top: 0.15rem;
+  }
+  .manifesto {
+    max-width: 170px; text-align: right;
+    border-left: 2px solid var(--sand); padding-left: 0.75rem;
+  }
+  .manifesto p {
+    font-family: 'Arvo', serif; font-style: italic;
+    font-size: 0.72rem; line-height: 1.7; color: var(--muted);
+  }
+
+  /* WAITLIST */
+  .zine-signup {
+    position: relative; z-index: 1;
+    background: var(--sand);
+    border-top: 2px solid var(--burnt);
+    border-bottom: 1px solid var(--sand);
+    padding: 1.75rem 3rem;
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 2rem;
+  }
+  .wt-text .wt-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem; letter-spacing: 0.1em; color: var(--rust);
+  }
+  .wt-text .wt-sub {
+    font-size: 0.6rem; color: var(--mid);
+    letter-spacing: 0.04em; margin-top: 0.2rem;
+  }
+  .wt-form { display: flex; gap: 0.5rem; align-items: center; }
+  .wt-input {
+    background: var(--cream); border: 1.5px solid var(--burnt);
+    border-radius: 1px; padding: 0.55rem 0.9rem;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.65rem; letter-spacing: 0.04em;
+    color: var(--ink); width: 220px; outline: none;
+  }
+  .wt-input::placeholder { color: var(--muted); }
+  .wt-input:focus { border-color: var(--rust); }
+
+  /* DIRECTORY SECTION */
+  .section-header {
+    position: relative; z-index: 1;
+    padding: 1.5rem 3rem 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--sand);
+  }
+  .section-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; letter-spacing: 0.15em; color: var(--rust);
+  }
+  .section-header .pill {
+    background: var(--sand); color: var(--rust);
+    font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 0.2rem 0.6rem; border-radius: 1px;
+    font-family: 'Courier Prime', monospace;
+  }
+
+  /* SHOP GRID */
+  .shop-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    position: relative; z-index: 1;
+  }
+  .shop-card {
+    padding: 1.25rem 1.5rem;
+    border-right: 1px solid var(--sand);
+    border-bottom: 1px solid var(--sand);
+    cursor: pointer; transition: background 0.15s;
+    position: relative; background: var(--cream);
+  }
+  .shop-card:hover { background: var(--pale); }
+  .shop-card:nth-child(3n) { border-right: none; }
+  .card-dot {
+    position: absolute; top: 1.25rem; right: 1.25rem;
+    width: 7px; height: 7px; border-radius: 50%; background: var(--burnt);
+  }
+  .card-tag {
+    font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--burnt); margin-bottom: 0.4rem;
+  }
+  .card-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem; letter-spacing: 0.06em;
+    color: var(--ink); line-height: 1.1;
+  }
+  .card-loc {
+    font-size: 0.58rem; color: var(--muted);
+    margin-top: 0.3rem; letter-spacing: 0.05em;
+  }
+  .card-badges { display: flex; gap: 0.3rem; margin-top: 0.6rem; }
+  .card-badge-icon {
+    width: 18px; height: 18px; opacity: 0.7;
+  }
+  .locked { background: var(--pale); cursor: default; }
+  .locked:hover { background: var(--pale); }
+  .locked .card-name { color: var(--sand); }
+  .locked .card-loc { color: var(--sand); }
+  .locked .lock-label {
+    font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted); margin-top: 0.5rem;
+  }
+
+  /* CATEGORIES */
+  .cat-section {
+    position: relative; z-index: 1;
+    border-top: 2px solid var(--burnt);
+    padding: 1.5rem 3rem;
+  }
+  .cat-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; letter-spacing: 0.15em; color: var(--rust);
+    margin-bottom: 1rem;
+  }
+  .cat-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--sand); border: 1px solid var(--sand);
+  }
+  .cat-item {
+    background: var(--cream); padding: 0.85rem 1rem;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .cat-item:hover { background: var(--pale); }
+  .cat-num {
+    font-size: 0.48rem; letter-spacing: 0.2em; color: var(--burnt); margin-bottom: 0.25rem;
+  }
+  .cat-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.95rem; letter-spacing: 0.06em; color: var(--ink);
+  }
+  .cat-soon {
+    font-size: 0.45rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted); margin-top: 0.2rem;
+  }
+  .cat-item.coming { background: var(--pale); cursor: default; }
+  .cat-item.coming:hover { background: var(--pale); }
+
+  /* BADGES PREVIEW */
+  .badge-section {
+    position: relative; z-index: 1;
+    background: var(--pale);
+    border-top: 1px solid var(--sand);
+    padding: 1.5rem 3rem;
+    display: flex; align-items: center; gap: 2rem;
+  }
+  .badge-intro .bi-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem; letter-spacing: 0.12em; color: var(--rust);
+  }
+  .badge-intro .bi-sub {
+    font-size: 0.58rem; color: var(--muted); margin-top: 0.2rem; max-width: 220px; line-height: 1.6;
+  }
+  .badge-row { display: flex; gap: 1.5rem; align-items: center; flex: 1; }
+  .badge-item { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+  .badge-item span {
+    font-size: 0.45rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted); text-align: center; max-width: 60px; line-height: 1.4;
+  }
+
+  /* SUBMIT */
+  .submit-section {
+    position: relative; z-index: 1;
+    border-top: 2px solid var(--burnt);
+    padding: 2.5rem 3rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+    align-items: center;
+  }
+  .submit-left .sl-eyebrow {
+    font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--burnt); margin-bottom: 0.75rem;
+  }
+  .submit-left h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 0.06em; color: var(--rust);
+    line-height: 1; margin-bottom: 1rem;
+  }
+  .submit-left p {
+    font-size: 0.72rem; color: var(--mid); line-height: 1.85; max-width: 380px;
+  }
+  .submit-right {
+    border: 1.5px solid var(--burnt); background: var(--pale); padding: 2rem;
+    position: relative;
+  }
+  .submit-right::before {
+    content: ''; position: absolute;
+    top: 5px; left: 5px; right: -5px; bottom: -5px;
+    border: 1px solid var(--sand); z-index: -1;
+  }
+  .form-row { margin-bottom: 1rem; }
+  .form-label {
+    display: block; font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--burnt); margin-bottom: 0.35rem;
+  }
+  .form-input {
+    width: 100%; background: var(--cream); border: 1.5px solid var(--sand);
+    border-radius: 1px; padding: 0.5rem 0.75rem;
+    font-family: 'Courier Prime', monospace; font-size: 0.68rem;
+    color: var(--ink); outline: none; transition: border-color 0.15s;
+  }
+  .form-input:focus { border-color: var(--burnt); }
+  .form-input::placeholder { color: var(--muted); }
+  .form-note {
+    font-size: 0.55rem; color: var(--muted); margin-top: 0.75rem; line-height: 1.6;
+  }
+
+  /* FOOTER */
+  .footer {
+    position: relative; z-index: 1;
+    padding: 1.25rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--sand);
+  }
+  .footer p {
+    font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
+  }
+  .footer a {
+    font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--burnt); text-decoration: none;
+  }
+  .footer a:hover { color: var(--rust); }
+  .scale-foot { display: flex; height: 3px; width: 60px; }
+  .scale-foot span { flex: 1; }
+
+  .fade-up { opacity: 0; transform: translateY(14px); animation: fadeUp 0.6s ease forwards; }
+  .d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.15s; }
+  .d3 { animation-delay: 0.3s; } .d4 { animation-delay: 0.45s; }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-center { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 3rem 1.5rem 2rem; }
+    .hero-right { align-items: flex-start; flex-direction: row; }
+    .zine-signup { flex-direction: column; align-items: flex-start; padding: 1.5rem; }
+    .shop-grid { grid-template-columns: repeat(2, 1fr); }
+    .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    .submit-section { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
+    .badge-section { flex-direction: column; padding: 1.5rem; }
+    .section-header { padding: 1.25rem 1.5rem 0.75rem; }
+    .footer { padding: 1rem 1.5rem; }
+    .cat-section { padding: 1.5rem; }
+  }
+  .skip-link {
+    position: absolute; top: -100px; left: 1rem; z-index: 999;
+    background: var(--burnt); color: var(--cream);
+    padding: 0.5rem 1rem; font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem; letter-spacing: 0.12em; text-decoration: none;
+    transition: top 0.15s;
+  }
+  .skip-link:focus { top: 6px; }
+
+  .footer-full { position: relative; z-index: 1; border-top: 2px solid var(--burnt); background: var(--pale); }
+  .footer-top { padding: 2.5rem 3rem; display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap; border-bottom: 1px solid var(--sand); }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.08em; color: var(--rust); margin-bottom: 0.5rem; }
+  .footer-logo span { color: var(--burnt); }
+  .footer-tagline { font-size: 0.58rem; color: var(--muted); letter-spacing: 0.05em; margin-bottom: 0.2rem; }
+  .footer-nav { display: flex; gap: 3rem; }
+  .footer-col { display: flex; flex-direction: column; gap: 0.5rem; }
+  .footer-col-title { font-family: 'Bebas Neue', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; color: var(--rust); margin-bottom: 0.25rem; }
+  .footer-col a { font-size: 0.58rem; letter-spacing: 0.08em; color: var(--mid); text-decoration: none; transition: color 0.15s; }
+  .footer-col a:hover { color: var(--burnt); }
+  .footer-bottom { padding: 1rem 3rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .footer-copy { font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .wcag-badge { font-size: 0.45rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--muted); padding: 0.15rem 0.4rem; }
+</style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="alternate icon" href="favicon.svg">
+  <meta name="theme-color" content="#C4541A">
+  <meta property="og:title" content="indie AZ -- Arizona Independent Commerce">
+  <meta property="og:description" content="Arizona's hand-picked directory of independently owned shops. Rigorously vetted, deliberately curated. We are shaping the future by honoring the past.">
+  <meta property="og:image" content="https://indieaz.com/og-image.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://indieaz.com">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="indie AZ">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="indie AZ -- Arizona Independent Commerce">
+  <meta name="twitter:description" content="Arizona's hand-picked directory of independently owned shops. Rigorously vetted, deliberately curated.">
+  <meta name="twitter:image" content="https://indieaz.com/og-image.svg">
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<div class="paper"></div>
+
+<div class="scale-strip">
+  <span class="sc1"></span><span class="sc2"></span><span class="sc3"></span>
+  <span class="sc4"></span><span class="sc5"></span><span class="sc6"></span>
+</div>
+
+<nav class="fade-up d1">
+  <a href="index.html" class="nav-logo">indie<span>AZ</span></a>
+  <div class="nav-center">Arizona Independent Commerce &middot; Est. 2025</div>
+  <div class="nav-right">
+    <a href="why.html" class="btn-sand">Our Why</a>
+    <a href="#submit" class="btn-stamp">Submit a Shop</a>
+  </div>
+</nav>
+
+<section class="hero fade-up d2" id="main-content">
+  <div>
+    <div class="hero-eyebrow">Conscious Commerce &middot; Arizona</div>
+    <h1>
+      Your dollar
+      <span class="accent">is a vote.</span>
+      <span class="outline">Cast it wisely.</span>
+    </h1>
+    <p class="hero-sub">Arizona's hand-picked directory of independent shops -- rigorously vetted, deliberately curated. For people who know that where you spend is who you are.</p>
+    <div class="hero-cta">
+      <a href="#zine" class="btn-stamp">Join our Zine</a>
+      <a href="#submit" class="btn-sand">Submit a Shop</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="stamp-badge">
+      <div class="num">48</div>
+      <div class="lbl">Vetted<br>Indie Shops</div>
+    </div>
+    <div class="manifesto">
+      <p>"Not every shop earns a spot. That's the whole point."</p>
+    </div>
+  </div>
+</section>
+
+<div class="zine-signup fade-up d3" id="zine">
+  <div class="wt-text">
+    <div class="wt-title">Join our Zine. No spam, no algorithm.</div>
+    <div class="wt-sub">Join the zine-signup -- we will let you in when the directory is ready.</div>
+  </div>
+  <div class="wt-form">
+    <input class="wt-input" type="email" placeholder="your@email.com">
+    <button class="btn-stamp">Join the Zine</button>
+  </div>
+</div>
+
+<div class="section-header fade-up d3">
+  <h2>Featured Shops</h2>
+  <span class="pill">Members preview</span>
+</div>
+
+<div class="shop-grid fade-up d3">
+  <div class="shop-card">
+    <div class="card-dot"></div>
+    <div class="card-tag">Books + Zines</div>
+    <div class="card-name">Practical Art</div>
+    <div class="card-loc">Phoenix &middot; 85003</div>
+    <div class="card-badges">
+      <svg class="card-badge-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="30" stroke="#C4541A" stroke-width="1.5"/>
+        <rect x="28" y="44" width="8" height="3" rx="1" fill="#C4541A"/>
+        <rect x="30" y="14" width="4" height="33" rx="2" fill="#C4541A"/>
+        <rect x="18" y="26" width="14" height="4" rx="2" fill="#C4541A"/>
+        <rect x="18" y="22" width="4" height="12" rx="2" fill="#C4541A"/>
+        <rect x="32" y="30" width="14" height="4" rx="2" fill="#C4541A"/>
+        <rect x="42" y="22" width="4" height="16" rx="2" fill="#C4541A"/>
+      </svg>
+    </div>
+  </div>
+  <div class="shop-card">
+    <div class="card-dot"></div>
+    <div class="card-tag">Vintage + Thrift</div>
+    <div class="card-name">Buffalo Exchange</div>
+    <div class="card-loc">Tempe &middot; 85281</div>
+  </div>
+  <div class="shop-card">
+    <div class="card-dot"></div>
+    <div class="card-tag">Health + Wellness</div>
+    <div class="card-name">Sinagua Malt</div>
+    <div class="card-loc">Flagstaff &middot; 86001</div>
+    <div class="card-badges">
+      <svg class="card-badge-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="30" stroke="#C4541A" stroke-width="1.5"/>
+        <line x1="32" y1="8" x2="32" y2="14" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="32" y1="50" x2="32" y2="56" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="8" y1="32" x2="14" y2="32" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="50" y1="32" x2="56" y2="32" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="15" y1="15" x2="19" y2="19" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="49" y1="15" x2="45" y2="19" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="15" y1="49" x2="19" y2="45" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="49" y1="49" x2="45" y2="45" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round"/>
+        <text x="32" y="35" text-anchor="middle" font-family="'Bebas Neue', sans-serif" font-size="8" fill="#C4541A" letter-spacing="1">EST.</text>
+      </svg>
+    </div>
+  </div>
+  <div class="shop-card locked">
+    <div class="card-tag">Apparel + Accessories</div>
+    <div class="card-name">-- -- --</div>
+    <div class="card-loc">&middot; &middot; &middot;</div>
+    <div class="lock-label">Unlocks on join</div>
+  </div>
+  <div class="shop-card locked">
+    <div class="card-tag">Garden + Outdoor</div>
+    <div class="card-name">-- -- --</div>
+    <div class="card-loc">&middot; &middot; &middot;</div>
+    <div class="lock-label">Unlocks on join</div>
+  </div>
+  <div class="shop-card locked">
+    <div class="card-tag">Home + Interiors</div>
+    <div class="card-name">-- -- --</div>
+    <div class="card-loc">&middot; &middot; &middot;</div>
+    <div class="lock-label">Unlocks on join</div>
+  </div>
+</div>
+
+<div class="cat-section fade-up d4">
+  <h2>Browse by Category</h2>
+  <div class="cat-grid">
+    <div class="cat-item">
+      <div class="cat-num">01</div>
+      <div class="cat-name">Apparel + Accessories</div>
+    </div>
+    <div class="cat-item">
+      <div class="cat-num">02</div>
+      <div class="cat-name">Books + Zines + Music</div>
+    </div>
+    <div class="cat-item">
+      <div class="cat-num">03</div>
+      <div class="cat-name">Home + Interiors</div>
+    </div>
+    <div class="cat-item">
+      <div class="cat-num">04</div>
+      <div class="cat-name">Vintage + Thrift</div>
+    </div>
+    <div class="cat-item">
+      <div class="cat-num">05</div>
+      <div class="cat-name">Health + Wellness + Apothecary</div>
+    </div>
+    <div class="cat-item">
+      <div class="cat-num">06</div>
+      <div class="cat-name">Garden + Outdoor Living</div>
+    </div>
+    <div class="cat-item">
+      <div class="cat-num">07</div>
+      <div class="cat-name">Souvenirs + Local Goods</div>
+    </div>
+    <div class="cat-item coming">
+      <div class="cat-num">08</div>
+      <div class="cat-name">Specialty Food + Beverage</div>
+      <div class="cat-soon">Coming Soon</div>
+    </div>
+  </div>
+</div>
+
+<div class="badge-section fade-up d4">
+  <div class="badge-intro">
+    <div class="bi-title">The Badge System</div>
+    <div class="bi-sub">Earned distinctions. Never self-declared. Applied by indie AZ editors only.</div>
+  </div>
+  <div class="badge-row">
+    <div class="badge-item">
+      <svg width="40" height="40" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="30" stroke="#C4541A" stroke-width="1.5"/>
+        <rect x="28" y="44" width="8" height="3" rx="1" fill="#C4541A"/>
+        <rect x="30" y="14" width="4" height="33" rx="2" fill="#C4541A"/>
+        <rect x="18" y="26" width="14" height="4" rx="2" fill="#C4541A"/>
+        <rect x="18" y="22" width="4" height="12" rx="2" fill="#C4541A"/>
+        <rect x="32" y="30" width="14" height="4" rx="2" fill="#C4541A"/>
+        <rect x="42" y="22" width="4" height="16" rx="2" fill="#C4541A"/>
+      </svg>
+      <span>Indigenous Owned</span>
+    </div>
+    <div class="badge-item">
+      <svg width="40" height="40" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="30" stroke="#C4541A" stroke-width="1.5"/>
+        <line x1="32" y1="8" x2="32" y2="14" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="32" y1="50" x2="32" y2="56" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="8" y1="32" x2="14" y2="32" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="50" y1="32" x2="56" y2="32" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="15" y1="15" x2="19" y2="19" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="49" y1="15" x2="45" y2="19" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="15" y1="49" x2="19" y2="45" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="49" y1="49" x2="45" y2="45" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round"/>
+        <text x="32" y="35" text-anchor="middle" font-family="'Bebas Neue', sans-serif" font-size="8" fill="#C4541A" letter-spacing="1">EST.</text>
+      </svg>
+      <span>Established 10+ Years</span>
+    </div>
+    <div class="badge-item">
+      <svg width="40" height="40" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="30" stroke="#C4541A" stroke-width="1.5"/>
+        <circle cx="32" cy="32" r="25" stroke="#C4541A" stroke-width="0.5" opacity="0.35"/>
+        <path d="M18 42 L25 28 L30 35 L34 26 L39 33 L44 22" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <circle cx="44" cy="22" r="3" stroke="#C4541A" stroke-width="1.5" fill="none"/>
+        <rect x="26" y="43" width="12" height="4" rx="1" stroke="#C4541A" stroke-width="1.2" fill="none"/>
+        <line x1="29" y1="47" x2="27" y2="51" stroke="#C4541A" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="35" y1="47" x2="37" y2="51" stroke="#C4541A" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      <span>Experience Offered</span>
+    </div>
+    <div class="badge-item">
+      <svg width="40" height="40" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="30" stroke="#C4541A" stroke-width="1.5"/>
+        <circle cx="32" cy="32" r="25" stroke="#C4541A" stroke-width="0.5" opacity="0.35"/>
+        <path d="M32 16 L38 27 H26 Z" stroke="#C4541A" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+        <path d="M21 34 Q15 27 21 21 Q24 18 28 19" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <path d="M43 34 Q49 27 43 21 Q40 18 36 19" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <path d="M21 34 Q26 43 32 41 Q38 43 43 34" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <path d="M21 34 L18 37" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M17 35 L19 39 L21 36" stroke="#C4541A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M43 34 L46 37" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M47 35 L45 39 L43 36" stroke="#C4541A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M32 16 L32 13" stroke="#C4541A" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M30 13 L34 13 L32 11 Z" stroke="#C4541A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <span>Sustainability Focused</span>
+    </div>
+  </div>
+</div>
+
+<section class="submit-section fade-up d4" id="submit">
+  <div class="submit-left">
+    <div class="sl-eyebrow">Own an indie shop in Arizona?</div>
+    <h2>Apply to be listed.</h2>
+    <p>Every shop is reviewed by a real person. We vet for independent ownership, local roots, and genuine character. Not every shop makes the list. That is the point.</p>
+    <br>
+    <p style="font-size:0.65rem; color:var(--muted);">You will hear from us within 7 days. No ghosting. No form rejections. A real response.</p>
+  </div>
+  <div class="submit-right">
+    <script type='text/javascript' src='https://hh142.infusionsoft.com/app/form/iframe/e24838f294c356825ee967d8f69fbbef'></script>
+  </div>
+</section>
+
+<footer class="footer-full" role="contentinfo">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">indie<span>AZ</span></div>
+      <p class="footer-tagline">Arizona Independent Commerce</p>
+      <p class="footer-tagline">We are shaping the future by honoring the past.</p>
+    </div>
+    <div class="footer-nav">
+      <div class="footer-col">
+        <p class="footer-col-title">Directory</p>
+        <a href="https://indieaz.com">Home</a>
+        <a href="https://indieaz.com/why.html">Our Why</a>
+        <a href="#zine">Join our Zine</a>
+        <a href="#submit">Submit a Shop</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Legal</p>
+        <a href="https://indieaz.com/privacy.html">Privacy Policy</a>
+        <a href="https://indieaz.com/terms.html">Terms of Service</a>
+        <a href="https://indieaz.com/accessibility.html">Accessibility</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="scale-foot"><span class="sc1"></span><span class="sc2"></span><span class="sc3"></span><span class="sc4"></span><span class="sc5"></span><span class="sc6"></span></div>
+    <p class="footer-copy">&copy; 2025 indie AZ. An independent community project. Arizona, USA.</p>
+    <span class="wcag-badge" aria-label="WCAG 2.1 AA Compliant">WCAG 2.1 AA</span>
+  </div>
+</footer>
+
+</body>
+</html>

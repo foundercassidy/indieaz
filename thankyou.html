@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank you -- indie AZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5EDD9; --sand: #EDD9B0; --rust: #8B3A1A;
+    --burnt: #C4541A; --amber: #E8842A; --ink: #2A1A0E;
+    --mid: #7A4A2A; --muted: #B08060; --pale: #FAF3E8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--cream); color: var(--ink);
+    font-family: 'Courier Prime', monospace;
+    min-height: 100vh; display: flex; flex-direction: column;
+    overflow-x: hidden;
+  }
+  .paper {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 34px,
+      rgba(139,58,26,0.03) 34px, rgba(139,58,26,0.03) 35px
+    );
+  }
+  .scale-strip {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; height: 5px; z-index: 100;
+  }
+  .scale-strip span { flex: 1; }
+  .sc1 { background: #2A1A0E; } .sc2 { background: #8B3A1A; }
+  .sc3 { background: #C4541A; } .sc4 { background: #E8842A; }
+  .sc5 { background: #F2C07E; } .sc6 { background: #F5EDD9; }
+  nav {
+    position: relative; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 3rem; border-bottom: 2px solid var(--burnt); margin-top: 5px;
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem;
+    letter-spacing: 0.08em; color: var(--rust); text-decoration: none;
+  }
+  .nav-logo span { color: var(--burnt); }
+  .main {
+    flex: 1; display: flex; align-items: center;
+    justify-content: center; padding: 4rem 3rem;
+    position: relative; z-index: 1;
+  }
+  .card {
+    max-width: 600px; width: 100%;
+    border: 1.5px solid var(--burnt); background: var(--pale);
+    padding: 3.5rem; position: relative;
+  }
+  .card::before {
+    content: ''; position: absolute;
+    top: 6px; left: 6px; right: -6px; bottom: -6px;
+    border: 1px solid var(--sand); z-index: -1;
+  }
+  .card-eyebrow {
+    font-size: 0.5rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--burnt); margin-bottom: 1.25rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .card-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--burnt); }
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 0.06em; line-height: 1.1;
+    color: var(--rust); margin-bottom: 0.4rem;
+  }
+  .tagline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem; letter-spacing: 0.1em; color: var(--burnt);
+    margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--sand);
+  }
+  .body-text { font-size: 0.8rem; line-height: 1.85; color: var(--mid); margin-bottom: 1.25rem; }
+  .timeline {
+    background: var(--sand); border-left: 2px solid var(--burnt);
+    padding: 1rem 1.25rem; margin: 1.75rem 0;
+  }
+  .timeline p { font-size: 0.72rem; color: var(--ink); line-height: 1.7; }
+  .timeline strong {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1rem;
+    letter-spacing: 0.08em; color: var(--burnt); display: block; margin-bottom: 0.2rem;
+  }
+  .why-link {
+    display: block; margin-top: 2rem; padding: 1.25rem 1.5rem;
+    border: 1.5px solid var(--burnt); text-decoration: none;
+    background: var(--cream); transition: background 0.15s;
+  }
+  .why-link:hover { background: var(--sand); }
+  .wl-label {
+    font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 0.3rem;
+  }
+  .wl-title {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
+    letter-spacing: 0.08em; color: var(--rust);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .wl-title::after { content: '→'; font-family: 'Courier Prime', monospace; color: var(--burnt); }
+  .footer-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 3rem; border-top: 1px solid var(--sand);
+    position: relative; z-index: 1;
+  }
+  .footer-bar p {
+    font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted); margin: 0;
+  }
+  .scale-foot { display: flex; height: 3px; width: 60px; }
+  .scale-foot span { flex: 1; }
+  .fade-up { opacity: 0; transform: translateY(16px); animation: fadeUp 0.6s ease forwards; }
+  .d1 { animation-delay: 0.15s; } .d2 { animation-delay: 0.3s; }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  .az-border {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 60px;
+    height: 100vh;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .skip-link { position: absolute; top: -100px; left: 1rem; z-index: 999; background: var(--burnt); color: var(--cream); padding: 0.5rem 1rem; font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 0.12em; text-decoration: none; transition: top 0.15s; }
+  .skip-link:focus { top: 6px; }
+
+  .footer-full { position: relative; z-index: 1; border-top: 2px solid var(--burnt); background: var(--pale); }
+  .footer-top { padding: 2.5rem 3rem; display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap; border-bottom: 1px solid var(--sand); }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.08em; color: var(--rust); margin-bottom: 0.5rem; }
+  .footer-logo span { color: var(--burnt); }
+  .footer-tagline { font-size: 0.58rem; color: var(--muted); letter-spacing: 0.05em; margin-bottom: 0.2rem; }
+  .footer-nav { display: flex; gap: 3rem; }
+  .footer-col { display: flex; flex-direction: column; gap: 0.5rem; }
+  .footer-col-title { font-family: 'Bebas Neue', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; color: var(--rust); margin-bottom: 0.25rem; }
+  .footer-col a { font-size: 0.58rem; letter-spacing: 0.08em; color: var(--mid); text-decoration: none; transition: color 0.15s; }
+  .footer-col a:hover { color: var(--burnt); }
+  .footer-bottom { padding: 1rem 3rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .footer-copy { font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .wcag-badge { font-size: 0.45rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--muted); padding: 0.15rem 0.4rem; }
+  .scale-foot { display: flex; height: 3px; width: 60px; }
+  .scale-foot span { flex: 1; }
+</style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="alternate icon" href="favicon.svg">
+  <meta name="theme-color" content="#C4541A">
+  <meta property="og:title" content="Thank You for Applying -- indie AZ">
+  <meta property="og:description" content="Your shop submission has been received. We will be in touch within 7 days.">
+  <meta property="og:image" content="https://indieaz.com/og-image.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://indieaz.com/thankyou.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="indie AZ">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://indieaz.com/og-image.svg">
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<div class="paper"></div>
+<!-- Arizona western border: Colorado River hand-traced -->
+<svg class="az-border" viewBox="0 0 60 800" xmlns="http://www.w3.org/2000/svg">
+  <path d="M 45 0 C 43 12,47 22,44 32 C 41 42,46 52,43 62 C 40 72,45 82,42 92 C 39 102,44 112,41 122 C 38 132,43 140,40 150 C 37 160,42 168,40 178 C 38 188,42 196,40 206 C 38 216,42 224,40 234 C 38 244,42 252,40 262 C 38 272,41 280,39 290 C 37 300,40 308,38 318 C 36 328,39 336,37 346 C 35 356,38 364,36 374 C 34 384,37 390,35 400 C 33 410,36 418,34 428 C 32 438,35 446,33 456 C 31 466,34 474,32 484 C 30 494,33 502,31 512 C 30 522,32 530,30 540 C 29 550,31 558,30 568 C 29 578,30 586,29 596 C 28 606,29 614,28 624 C 27 634,28 642,27 652 C 26 662,27 670,26 680 C 25 690,26 698,24 708 C 22 718,23 728,21 738 C 19 748,20 758,18 768 L 15 800"
+  stroke="#C4541A" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+</svg>
+
+
+<!-- Arizona western border: Colorado River hand-traced path -->
+
+
+
+
+
+<div class="scale-strip">
+  <span class="sc1"></span><span class="sc2"></span><span class="sc3"></span>
+  <span class="sc4"></span><span class="sc5"></span><span class="sc6"></span>
+</div>
+
+<nav>
+  <a href="https://indieaz.com" class="nav-logo">indie<span>AZ</span></a>
+</nav>
+
+<main class="main">
+  <div class="card fade-up d1">
+    <div class="card-eyebrow">Shop Submission Received</div>
+    <h1>Thank you for applying to the indie AZ Directory.</h1>
+    <p class="tagline">We are shaping the future by honoring the past.</p>
+    <p class="body-text">Your submission is in the hands of a real person. Not an algorithm. Not a form letter generator. An actual human being who cares deeply about what gets listed in this directory and why.</p>
+    <p class="body-text">We read everything. We move with intention, not urgency. Here is what happens next:</p>
+    <div class="timeline">
+      <strong>Within 7 days</strong>
+      <p>You will hear from us. Either your shop is in, we need a little more information, or we will let you know honestly that it is not the right fit right now. No ghosting. No form rejections. A real response.</p>
+    </div>
+    <p class="body-text">While you wait, we would love for you to understand what this directory is really about. Not the short version. The full one. The one that starts 10,000 years before statehood and ends with why your shop matters right now.</p>
+    <a href="https://indieaz.com/why.html" class="why-link">
+      <div class="wl-label">Read our story</div>
+      <div class="wl-title">You Are Standing On Very Old Ground</div>
+    </a>
+  </div>
+</main>
+
+<footer class="footer-full" role="contentinfo">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">indie<span>AZ</span></div>
+      <p class="footer-tagline">Arizona Independent Commerce</p>
+      <p class="footer-tagline">We are shaping the future by honoring the past.</p>
+    </div>
+    <div class="footer-nav">
+      <div class="footer-col">
+        <p class="footer-col-title">Directory</p>
+        <a href="https://indieaz.com">Home</a>
+        <a href="https://indieaz.com/why.html">Our Why</a>
+        <a href="https://indieaz.com/#zine">Join our Zine</a>
+        <a href="https://indieaz.com/#submit">Submit a Shop</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Legal</p>
+        <a href="https://indieaz.com/privacy.html">Privacy Policy</a>
+        <a href="https://indieaz.com/terms.html">Terms of Service</a>
+        <a href="https://indieaz.com/accessibility.html">Accessibility</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="scale-foot"><span class="sc1"></span><span class="sc2"></span><span class="sc3"></span><span class="sc4"></span><span class="sc5"></span><span class="sc6"></span></div>
+    <p class="footer-copy">&copy; 2025 indie AZ. An independent community project. Arizona, USA.</p>
+    <span class="wcag-badge" aria-label="WCAG 2.1 AA Compliant">WCAG 2.1 AA</span>
+  </div>
+</footer>
+
+</body>
+</html>

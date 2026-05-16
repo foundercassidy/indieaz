@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accessibility Statement -- indie AZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root { --cream: #F5EDD9; --sand: #EDD9B0; --rust: #8B3A1A; --burnt: #C4541A; --ink: #2A1A0E; --mid: #7A4A2A; --muted: #B08060; --pale: #FAF3E8; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--ink); font-family: 'Courier Prime', monospace; font-size: 16px; line-height: 1.85; }
+  .paper { position: fixed; inset: 0; pointer-events: none; z-index: 0; background-image: repeating-linear-gradient(0deg, transparent, transparent 34px, rgba(139,58,26,0.03) 34px, rgba(139,58,26,0.03) 35px); }
+  .scale-strip { position: fixed; top: 0; left: 0; right: 0; display: flex; height: 5px; z-index: 100; }
+  .scale-strip span { flex: 1; }
+  .sc1 { background: #2A1A0E; } .sc2 { background: #8B3A1A; } .sc3 { background: #C4541A; } .sc4 { background: #E8842A; } .sc5 { background: #F2C07E; } .sc6 { background: #F5EDD9; }
+  nav { position: sticky; top: 5px; z-index: 90; display: flex; align-items: center; justify-content: space-between; padding: 1rem 3rem; background: var(--cream); border-bottom: 2px solid var(--burnt); }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.08em; color: var(--rust); text-decoration: none; }
+  .nav-logo span { color: var(--burnt); }
+  .btn-stamp { background: var(--burnt); color: var(--cream); border: none; padding: 0.45rem 1.1rem; font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 0.12em; cursor: pointer; text-decoration: none; transition: background 0.15s; display: inline-block; }
+  .btn-stamp:hover { background: var(--rust); }
+  .hero { padding: 4rem 3rem 2rem; border-bottom: 1px solid var(--sand); position: relative; z-index: 1; }
+  .eyebrow { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--burnt); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+  .eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--burnt); }
+  h1 { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; line-height: 0.95; letter-spacing: 0.03em; color: var(--rust); margin-bottom: 1rem; }
+  .updated { font-size: 0.58rem; color: var(--muted); letter-spacing: 0.1em; }
+  .body-wrap { max-width: 720px; padding: 3rem 3rem 4rem; position: relative; z-index: 1; }
+  h2 { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.1em; color: var(--rust); margin: 2.5rem 0 0.75rem; padding-top: 2rem; border-top: 1px solid var(--sand); }
+  h2:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+  p { margin-bottom: 1.25rem; color: var(--mid); font-size: 0.8rem; }
+  p strong { color: var(--ink); }
+  ul { margin: 0 0 1.25rem 1.5rem; }
+  ul li { color: var(--mid); font-size: 0.8rem; margin-bottom: 0.4rem; line-height: 1.7; }
+  a { color: var(--burnt); }
+  a:hover { color: var(--rust); }
+  .status-box { background: var(--sand); border-left: 3px solid var(--burnt); padding: 1rem 1.25rem; margin: 1.5rem 0; }
+  .status-box p { margin: 0; color: var(--ink); }
+  .footer { position: relative; z-index: 1; padding: 1.5rem 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; border-top: 2px solid var(--burnt); background: var(--pale); }
+  .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .footer-links a { font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--burnt); text-decoration: none; }
+  .footer-links a:hover { color: var(--rust); }
+  .footer-copy { font-size: 0.5rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .wcag { font-size: 0.48rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--muted); padding: 0.15rem 0.4rem; }
+  .scale-foot { display: flex; height: 3px; width: 60px; }
+  .scale-foot span { flex: 1; }
+</style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="alternate icon" href="favicon.svg">
+  <meta name="theme-color" content="#C4541A">
+  <meta property="og:title" content="Accessibility Statement -- indie AZ">
+  <meta property="og:description" content="indie AZ is committed to WCAG 2.1 AA accessibility standards.">
+  <meta property="og:image" content="https://indieaz.com/og-image.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://indieaz.com/accessibility.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="indie AZ">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://indieaz.com/og-image.svg">
+</head>
+<body>
+<div class="paper"></div>
+<div class="scale-strip"><span class="sc1"></span><span class="sc2"></span><span class="sc3"></span><span class="sc4"></span><span class="sc5"></span><span class="sc6"></span></div>
+<nav>
+  <a href="https://indieaz.com" class="nav-logo" aria-label="indie AZ home">indie<span>AZ</span></a>
+  <a href="https://indieaz.com" class="btn-stamp">Back to Directory</a>
+</nav>
+<header class="hero">
+  <div class="eyebrow">Legal</div>
+  <h1>Accessibility Statement</h1>
+  <p class="updated">Last updated: May 2025</p>
+</header>
+<main class="body-wrap" id="main-content">
+
+  <h2>Our commitment</h2>
+  <p>indie AZ is committed to ensuring that this website is accessible to everyone, including people with disabilities. We believe that access to information about locally owned shops in Arizona should not be limited by ability, and we are actively working to meet and maintain accessibility standards across every page of this site.</p>
+
+  <div class="status-box">
+    <p><strong>Conformance status:</strong> indie AZ aims to conform to the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA. These guidelines explain how to make web content more accessible to people with disabilities.</p>
+  </div>
+
+  <h2>Measures we have taken</h2>
+  <p>To support accessibility, indie AZ has taken the following measures:</p>
+  <ul>
+    <li>All images include descriptive alternative text</li>
+    <li>Color contrast ratios meet or exceed WCAG 2.1 AA requirements across all text and interactive elements</li>
+    <li>The site is navigable by keyboard alone without requiring a mouse</li>
+    <li>All interactive elements including buttons, links, and form fields are clearly labeled</li>
+    <li>Page structure uses proper semantic HTML including landmark regions, headings, and lists</li>
+    <li>Form inputs include associated labels and descriptive placeholder text</li>
+    <li>Focus indicators are visible and clearly defined</li>
+    <li>The site does not use content that flashes more than three times per second</li>
+    <li>Font sizes and layouts are responsive and support browser text resizing up to 200 percent</li>
+    <li>Skip to main content links are provided on every page</li>
+  </ul>
+
+  <h2>Known limitations</h2>
+  <p>While we strive for full accessibility, we acknowledge the following current limitations:</p>
+  <ul>
+    <li>Some third-party embedded content, such as Keap intake forms, may not fully conform to WCAG 2.1 AA. We are working with our providers to address this.</li>
+    <li>Some decorative SVG elements may not have complete screen reader descriptions. We are reviewing these on an ongoing basis.</li>
+  </ul>
+  <p>We are actively working to resolve these limitations and will update this statement as improvements are made.</p>
+
+  <h2>Assistive technology compatibility</h2>
+  <p>indie AZ is designed to be compatible with the following assistive technologies:</p>
+  <ul>
+    <li>Screen readers including NVDA, JAWS, VoiceOver, and TalkBack</li>
+    <li>Browser zoom and text resizing</li>
+    <li>Keyboard-only navigation</li>
+    <li>High contrast display modes</li>
+    <li>Voice control software</li>
+  </ul>
+
+  <h2>Feedback and contact</h2>
+  <p>We welcome feedback on the accessibility of indie AZ. If you experience any barriers or have suggestions for improvement, please contact us:</p>
+  <ul>
+    <li>Email: <a href="mailto:info@indieaz.com">info@indieaz.com</a></li>
+    <li>Subject line: Accessibility Feedback</li>
+  </ul>
+  <p>We aim to respond to accessibility feedback within 5 business days. If you are not satisfied with our response, you may contact the <a href="https://www.ada.gov" target="_blank" rel="noopener noreferrer">ADA National Network</a> for further guidance.</p>
+
+  <h2>Formal complaints</h2>
+  <p>If you are not satisfied with our response to an accessibility concern, you have the right to contact the relevant enforcement body. In the United States, this is the Department of Justice Civil Rights Division.</p>
+
+  <h2>Review schedule</h2>
+  <p>This statement was last reviewed in May 2025. We review and update our accessibility practices on an ongoing basis and formally review this statement annually.</p>
+
+</main>
+<footer class="footer" role="contentinfo">
+  <div class="footer-links">
+    <a href="https://indieaz.com">Directory</a>
+    <a href="https://indieaz.com/why.html">Our Why</a>
+    <a href="https://indieaz.com/privacy.html">Privacy Policy</a>
+    <a href="https://indieaz.com/terms.html">Terms of Service</a>
+    <a href="https://indieaz.com/accessibility.html" aria-current="page">Accessibility</a>
+  </div>
+  <div class="scale-foot"><span class="sc1"></span><span class="sc2"></span><span class="sc3"></span><span class="sc4"></span><span class="sc5"></span><span class="sc6"></span></div>
+  <div style="display:flex; flex-direction:column; align-items:flex-end; gap:0.4rem;">
+    <span class="wcag" aria-label="WCAG 2.1 AA Compliant">WCAG 2.1 AA</span>
+    <span class="footer-copy">&copy; 2025 indie AZ. An independent community project. Arizona, USA.</span>
+  </div>
+</footer>
+</body>
+</html>
